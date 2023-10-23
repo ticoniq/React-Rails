@@ -1,31 +1,50 @@
+// Entry point for the build script in your package.json
+import '@hotwired/turbo-rails';
+import './controllers';
+import { BrowserRouter, NavLink, Route, Routes } from 'react-router-dom';
 import React from 'react';
-import { Provider } from 'react-redux';
 import ReactDOM from 'react-dom';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Home from './components/Home';
+import Greeting from './components/Greeting';
+import { Provider } from 'react-redux';
 import store from './redux/store';
-import Greeting from './components/Greetings.js'
-
-import Rails from "@rails/ujs";
-import * as ActiveStorage from "@rails/activestorage";
-import "channels";
-
-Rails.start();
-ActiveStorage.start();
 
 function App() {
   return (
-    <Provider store={store}>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Greeting />} />
-        </Routes>
-      </BrowserRouter>
-    </Provider>
+    <div className="App">
+      <nav className="navbar">
+        <NavLink
+          className={({ isActive }) => (isActive ? 'active-link' : 'default-link')}
+          to="/"
+        >
+          Home
+        </NavLink>
+        <NavLink
+          className={({ isActive }) => (isActive ? 'active-link' : 'default-link')}
+          to="/greetings"
+        >
+          Greetings
+        </NavLink>
+      </nav>
+      <Routes>
+        <Route
+          path="/"
+          element={<Home />}
+        />
+        <Route
+          path="greetings"
+          element={<Greeting />}
+        />
+      </Routes>
+    </div>
   );
 }
 
-ReactDOM.render(
-    <App/>,
-  document.getElementById('root'),
-  
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <BrowserRouter>
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </BrowserRouter>,
 );
