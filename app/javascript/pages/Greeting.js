@@ -10,5 +10,9 @@ export default function Greeting() {
     dispatch(fetchRandomGreeting());
   }, [dispatch]);
 
-  return <div className="text-title">{greetings}</div>;
+  return (
+    <div class="jumbotron">
+      <h1 class="display-4">{greetings}</h1>
+    </div>
+  )
 }
